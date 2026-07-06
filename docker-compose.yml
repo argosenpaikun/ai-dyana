@@ -31,7 +31,7 @@ services:
     networks:
       - dyana-network
     ports:
-      - "9000:9000"
+      - "9001:9000"
 
   milvus:
     container_name: milvus-standalone
