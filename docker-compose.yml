@@ -63,5 +63,5 @@ volumes:
     name: etcd_data
   minio_data:
     name: minio_data
-  milvus:
+  milvus_data:
     name: milvus_data
