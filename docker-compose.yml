@@ -17,6 +17,12 @@ services:
       - etcd_data:/etcd
     networks:
       - dyana-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -qO- http://localhost:2379/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
 
   minio:
     container_name: milvus-minio
@@ -32,6 +38,12 @@ services:
       - dyana-network
     ports:
       - "9001:9000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
 
   milvus:
     container_name: milvus-standalone
@@ -52,6 +64,12 @@ services:
     ports:
       - "19530:19530"
       - "9091:9091"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
 
 networks:
   dyana-network:
