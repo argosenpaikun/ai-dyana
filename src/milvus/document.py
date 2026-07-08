@@ -1,3 +1,4 @@
+from uuid import uuid4
 from milvus.client import get_milvus_client
 from milvus.embedding import generate_embedding
 
@@ -13,7 +14,7 @@ def insert_document(
     data = [
         {
             "text": text,
-            "embedding": embedding,
+            "vector": embedding,
         }
     ]
     result = client.insert(
