@@ -1,10 +1,30 @@
 import uvicorn
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from api.collections import router as collection_router
 from api.documents import router as document_router
 from api.rag import router as rag_router
+
+from services.bm25_service import rebuild_index
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Application startup.
+    """
+    rebuild_index()
+
+    yield
+
+    """
+    Application shutdown.
+    """
+    pass
+
 
 def create_app() -> FastAPI:
     """
@@ -14,7 +34,8 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="AI-Dyana",
         version="1.0.0",
-        description="AI-Dyana RAG Service using FastAPI and Milvus"
+        description="AI-Dyana RAG Service using FastAPI and Milvus",
+        lifespan=lifespan,
     )
 
     # Register API routers
@@ -28,12 +49,13 @@ def create_app() -> FastAPI:
             "application": "AI-Dyana",
             "status": "running"
         }
-    
+
     return app
+
 
 def main():
     """
-    Application entrypoint
+    Application entrypoint.
     """
     uvicorn.run(
         "main:create_app",
@@ -42,6 +64,7 @@ def main():
         reload=True,
         factory=True
     )
+
 
 app = create_app()
 

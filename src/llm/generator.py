@@ -2,14 +2,15 @@ from openai import OpenAI
 from config import OPENAI_API_KEY
 
 client = OpenAI(
-    api_key=OPENAI_API_KEY
+    api_key=OPENAI_API_KEY,
+    base_url="https://api.groq.com/openai/v1",
 )
 
 def generate_answer(
         prompt: str,
 ):
     response = client.chat.completions.create(
-        model="gpt-4.1",
+        model="llama-3.3-70b-versatile",
         messages=[
             {
                 "role": "user",
