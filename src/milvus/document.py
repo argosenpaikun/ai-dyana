@@ -1,13 +1,17 @@
 from milvus.client import get_milvus_client
 from milvus.embedding import generate_embedding
 
+from mongodb.document import (
+    insert_document_metadata,
+)
+
 
 def insert_document(
     collection_name: str,
     text: str,
 ):
     """
-    Insert a document into Milvus.
+    Insert a document into Milvus and MongoDB.
     """
     client = get_milvus_client()
 
@@ -23,6 +27,13 @@ def insert_document(
     result = client.insert(
         collection_name=collection_name,
         data=data,
+    )
+
+    milvus_id = result["ids"][0]
+
+    insert_document_metadata(
+        milvus_id=milvus_id,
+        text=text,
     )
 
     print("Document inserted successfully.")
@@ -73,7 +84,9 @@ def get_all_documents(
     """
     client = get_milvus_client()
 
-    if not client.has_collection(collection_name):
+    if not client.has_collection(
+        collection_name
+    ):
         return []
 
     documents = client.query(
