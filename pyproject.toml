@@ -15,6 +15,9 @@ authors = [
 ]
 
 dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    
     "websockets",
     "langchain",
     "langchain-anthropic",

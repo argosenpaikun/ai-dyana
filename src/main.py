@@ -1,10 +1,49 @@
-from config import COLLECTION_NAME
-from milvus.document import count_documents
+import uvicorn
 
-# Temporary test script for Milvus module.
+from fastapi import FastAPI
+
+from api.collections import router as collection_router
+from api.documents import router as document_router
+from api.rag import router as rag_router
+
+def create_app() -> FastAPI:
+    """
+    Application factory.
+    Creates and configures FastAPI application.
+    """
+    app = FastAPI(
+        title="AI-Dyana",
+        version="1.0.0",
+        description="AI-Dyana RAG Service using FastAPI and Milvus"
+    )
+
+    # Register API routers
+    app.include_router(collection_router)
+    app.include_router(document_router)
+    app.include_router(rag_router)
+
+    @app.get("/")
+    def health():
+        return {
+            "application": "AI-Dyana",
+            "status": "running"
+        }
+    
+    return app
+
 def main():
-    count = count_documents(COLLECTION_NAME)
-    print(f"Document Count: {count}")
+    """
+    Application entrypoint
+    """
+    uvicorn.run(
+        "main:create_app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        factory=True
+    )
+
+app = create_app()
 
 if __name__ == "__main__":
     main()
