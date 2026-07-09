@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-dyana"
+version = "0.1.0"
+description = "AI-Dyana - Milvus Vector Database and AI Services"
+readme = "README.md"
+requires-python = ">=3.10"
+
+authors = [
+    {name = "Mohamed Affian"},
+    {name = "Haziq"}
+]
+
+dependencies = [
+    "websockets",
+    "langchain",
+    "langchain-anthropic",
+    "langgraph",
+    "sqlalchemy",
+    "librosa",
+    "pydantic",
+    "aiohttp",
+    "openai",
+    "pandas",
+    "sentence-transformers",
+    "pymilvus==3.0.0",
+    "torch"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]
+
+python_files = [
+    "test_*.py"
+]

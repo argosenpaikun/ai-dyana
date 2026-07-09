@@ -61,23 +61,15 @@ def list_collections():
     """
     client = get_milvus_client()
     collections = client.list_collections()
-    if not collections:
-        print("No collections found.")
-        return
     
-    print("Collections:")
-    for collection in collections:
-        print(f"- {collection}")
+    return collections
 
 def describe_collection(collection_name: str):
     """
     Display information about a collection.
     """
     client = get_milvus_client()
-    collection = client.describe_collection(collection_name=collection_name)
-    print(f"\nCollection Information: {collection_name}")
-    for key, value in collection.items():
-        print(f"{key}: {value}")
+    return client.describe_collection(collection_name=collection_name)
 
 def drop_collection(collection_name: str):
     """

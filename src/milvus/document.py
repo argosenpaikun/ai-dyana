@@ -21,6 +21,8 @@ def insert_document(
         collection_name=collection_name,
         data=data,
     )
+
+    client.flush(collection_name=collection_name)
     print("Document inserted successfully.")
     print(result)
     return result
@@ -37,6 +39,7 @@ def delete_document(
         collection_name=collection_name,
         ids=[document_id],
     )
+    
     print(f"Document {document_id} deleted successfully.")
 
 def count_documents(
@@ -46,7 +49,11 @@ def count_documents(
     Return the number of documents in a collection.
     """
     client = get_milvus_client()
-    stats = client.get_collection_stats(
+    result = client.query(
         collection_name=collection_name,
+        filter="",
+        output_fields=[
+            "count(*)"
+        ]
     )
-    return int(stats["row_count"])
+    return result[0]["count(*)"]
