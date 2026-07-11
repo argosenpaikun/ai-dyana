@@ -9,3 +9,8 @@ aiohttp
 openai
 pandas
 sentence-transformers
+pymilvus==3.0.0
+torch
+pymongo
+rank-bm25
+redis
