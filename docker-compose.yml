@@ -52,17 +52,20 @@ services:
       - "19530:19530"
       - "9091:9091"
 
-  redis:
-    container_name: redis
+  milvus-redis:
+    container_name: milvus-redis
     image: redis:latest
     restart: unless-stopped
     ports:
       - "6379:6379"
+    volumes:
+      - milvus_redis_data:/data
+    command: redis-server --appendonly yes
     networks:
       - dyana-network
 
-  mongodb:
-    container_name: mongodb
+  milvus-mongodb:
+    container_name: milvus-mongodb
     image: mongo:latest
     restart: unless-stopped
     ports:
@@ -70,7 +73,7 @@ services:
     networks:
       - dyana-network
     volumes:
-      - mongodb_data:/data/db
+      - milvus_mongodb_data:/data/db
 
 networks:
   dyana-network:
@@ -84,5 +87,8 @@ volumes:
     name: minio_data
   milvus_data:
     name: milvus_data
-  mongodb_data:
-    name: mongodb_data
+  milvus_mongodb_data:
+    name: milvus_mongodb_data
+  milvus_redis_data:
+    name: milvus_redis_data
+  
