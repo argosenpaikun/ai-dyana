@@ -11,14 +11,21 @@ def build_index(
     global _bm25
     global _documents
 
-    _documents = documents
+    corpus = []
+    filtered_docs = []
 
-    corpus = [
-        tokenize(
-            document["text"]
-        )
-        for document in documents
-    ]
+    for doc in documents:
+        tokens = tokenize(doc.get("text", ""))
+        
+        if tokens:
+            corpus.append(tokens)
+            filtered_docs.append(doc)
+
+    _documents = filtered_docs
+
+    if not corpus:
+        _bm25 = None
+        return
 
     _bm25 = BM25Okapi(corpus)
 
