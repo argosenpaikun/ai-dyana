@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from models.documents import AddDocumentRequest
 from milvus.document import insert_document
 from services.bm25_service import rebuild_index
 
@@ -10,13 +11,10 @@ router = APIRouter(
 
 
 @router.post("/")
-def add_document(
-    collection_name: str,
-    text: str,
-):
+def add_document(request: AddDocumentRequest):
     result = insert_document(
-        collection_name=collection_name,
-        text=text,
+        collection_name=request.collection_name,
+        text=request.text,
     )
 
     rebuild_index()
