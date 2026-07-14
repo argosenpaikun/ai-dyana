@@ -42,12 +42,15 @@ def delete_document(
     """
     client = get_milvus_client()
 
-    client.delete(
+    result = client.delete(
         collection_name=collection_name,
         ids=[document_id],
     )
 
-    print(f"Document {document_id} deleted successfully.")
+    return {
+        "delete_count": getattr(result, "delete_count", 1),
+        document_id: document_id
+    }
 
 
 def count_documents(

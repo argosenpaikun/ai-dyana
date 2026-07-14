@@ -28,7 +28,7 @@ def add_document(request: AddDocumentRequest):
 @router.delete("/")
 def remove_document(request: DeleteDocumentRequest):
     try:
-        delete_document(
+        result = delete_document(
             collection_name=request.collection_name,
             document_id=request.document_id
         )
@@ -37,7 +37,7 @@ def remove_document(request: DeleteDocumentRequest):
 
         return {
             "status": "success",
-            "messsage": f"Document {request.document_id} deleted successfully"
+            **result
         }
     except Exception as e:
         raise HTTPException(
