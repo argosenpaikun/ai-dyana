@@ -4,10 +4,12 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from telemetry.opentelemetry import instrument
 from api.collections import router as collection_router
 from api.documents import router as document_router
 from api.rag import router as rag_router
 from api.mongodb import router as mongodb_router
+from api.health import router as health_router
 
 from services.bm25_service import rebuild_index
 
@@ -39,7 +41,10 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    instrument(app)
+
     # Register API routers
+    app.include_router(health_router)
     app.include_router(collection_router)
     app.include_router(document_router)
     app.include_router(rag_router)

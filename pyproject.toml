@@ -30,10 +30,20 @@ dependencies = [
     "pandas",
     "sentence-transformers",
     "pymilvus==3.0.0",
-    "torch"
-    "pymongo"
-    "rank-bm25"
-    "redis"
+    "torch",
+    "pymongo",
+    "rank-bm25",
+    "redis",
+
+    "opentelemetry-api",
+    "opentelemetry-sdk",
+    "opentelemetry-exporter-otlp",
+    "opentelemetry-instrumentation-fastapi",
+    "opentelemetry-instrumentation-logging",
+    "opentelemetry-instrumentation-requests",
+    "opentelemetry-instrumentation-pymongo",
+    "opentelemetry-instrumentation-redis",
+    "opentelemetry-instrumentation-urllib3"
 ]
 
 [tool.setuptools]
