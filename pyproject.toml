@@ -34,7 +34,7 @@ dependencies = [
     "pymongo",
     "rank-bm25",
     "redis",
-
+    "python-multipart",
     "opentelemetry-api",
     "opentelemetry-sdk",
     "opentelemetry-exporter-otlp",
