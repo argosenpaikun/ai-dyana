@@ -17,6 +17,7 @@ authors = [
 dependencies = [
     "fastapi",
     "uvicorn[standard]",
+    "python-multipart",
     
     "websockets",
     "langchain",
